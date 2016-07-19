@@ -11,10 +11,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718194954) do
+ActiveRecord::Schema.define(version: 20160719170849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "places", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address_one"
+    t.string   "address_two"
+    t.string   "city"
+    t.integer  "zip"
+    t.string   "phone"
+    t.integer  "admin_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.integer  "trip_id"
+    t.integer  "passenger_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "tickets", ["trip_id"], name: "index_tickets_on_trip_id", using: :btree
+
+  create_table "trips", force: :cascade do |t|
+    t.integer  "place_id"
+    t.integer  "driver_id"
+    t.integer  "admin_id"
+    t.datetime "depart_time"
+    t.datetime "return_time"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "user_roles", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id", using: :btree
+  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -42,4 +89,7 @@ ActiveRecord::Schema.define(version: 20160718194954) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "tickets", "trips"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
 end

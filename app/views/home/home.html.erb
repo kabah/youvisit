@@ -1,1 +1,9 @@
-<h1>home page</h1>
+<% if user_signed_in? %>
+  <% if current_user.has_role?('admin') %>
+    <%= render 'admin' %>
+  <% elsif current_user.has_role?('driver') %>
+    <%= render 'driver' %>
+  <% else %>
+    <%= render 'user' %>
+  <% end %>
+<% end %> 
