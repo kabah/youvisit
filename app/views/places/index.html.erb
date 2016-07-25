@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h2>Places You Can Visit</h2>
+
+<div class="table-responsive">
+<table class="table table-hover table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>zip</th>
+      <th>State</th>
+      <th>Update</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @places.each do |place| %>
+      <tr>
+        <td><%= link_to place.name, place %></td>
+        <td><%= place.address_one %></td>
+        <td><%= place.city %></td>
+        <td><%= place.zip %></td>
+        <td>IL</td>
+        <td><%= link_to 'Edit', edit_place_path(place) %></td>
+        <td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+
+<%= link_to 'New Place', new_place_path, class: 'btn btn-default' %>

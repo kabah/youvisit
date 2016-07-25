@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<h3><%= @place.name %></h3>
+<p><%= @place.address_one %></p>
+<% if @place.address_two.present? %>
+<p><%= @place.address_two %></p>
+<% end %>
+<p><%= @place.city %>, IL <%= @place.zip %></p>
+
+
+<%= link_to 'Edit', edit_place_path(@place) %> |
+<%= link_to 'Back', places_path %>
